@@ -4,21 +4,23 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css"  href="estilo.css" /> <!-- faz a ligaçao entre o css e o html-->
         <title></title>
     </head>
     <body>
-        <fieldset>
-            <legend>Cadastrar Aluno</legend>
-            <form id="form" name="form" method="post" action="#" onsubmit="cadastrarAluno()">
-                <label for="nome">Nome</label>
-                <input type="text" name="nome" id="nome" value=""/>
-                <input type="hidden" name="ra" id="ra" value=""/>
-                <button type="button" onclick="cadastrarAluno()">Salvar</button>
-            </form>
-            <span></span>
-        </fieldset>
+        <div class="areaColorida" id="corpo">
+            
+            <fieldset id="formulario">
+                <form action="login.php" method="post">
+                    Login:  <input type="text" name="login" size="20" maxlength="100"/>
+                    <br><br>
+                    Senha:  <input type="password" name="senha" size="20" maxlength="16" />
+                    <br><br>
+                    <button type="button" onclick="#">Login</button>
+                </form>
+            </fieldset>
+        </div>
         <?php
-        
         ?>
     </body>
 </html>

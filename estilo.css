@@ -1,0 +1,46 @@
+body {
+	background-color:#FFFFFF;
+	margin:0;
+	padding:0;
+	font-style: normal;
+	font-variant: normal;
+	font-weight:bold;
+	font-size:12px;
+	font-family:sans-serif;
+	line-height:20px; 
+	letter-spacing: 1px;
+	text-align:justify;
+	color:#FFFFFF; 
+}
+.areaColorida {
+	background-color:#ABADAA;
+}
+#corpo {
+	float:left;
+	width:454px;
+	height:303px;
+	margin-right:35px;
+	margin-left:35px;
+}
+#demo{
+	margin-top:20px;	
+	margin-right:10px;	
+	margin-bottom:90px;	
+	margin-left:400px;	
+}
+#formulario{
+	float:top;
+	margin-left:50px;
+	padding-top:12px;
+	padding-bottom:0px;
+	width:330px;
+	text-align:center;
+	border:solid 1px #FFFFFF;
+}
+.input{
+	border: solid 1px #ABADAA;
+	color:#2B3444;
+}	
+#botao{
+	background-color:#FFFFFF;
+}
