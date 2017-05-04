@@ -16,11 +16,13 @@
                     <br><br>
                     Senha:  <input type="password" name="senha" size="20" maxlength="16" />
                     <br><br>
-                    <button type="button" onclick="#">Login</button>
+                    <input type="checkbox" value="lembrarme" id="lembrarme" style="align-content: flex-start">Lembrar-me
+                    <button type="submit" style="align-items: flex-end">Login</button>
                 </form>
+                <a href="CadastrarUsuarioForm.php" style="alignment-baseline: initial">Cadastre-se</a>
             </fieldset>
+            
         </div>
-        <?php
-        ?>
+
     </body>
 </html>
