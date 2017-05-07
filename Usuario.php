@@ -6,12 +6,35 @@ class Usuario {
     protected $tabela = "usuarios";
     protected $id = "";
     protected $pwd = "";
+    protected $nivel = "";
     protected $nomeUsuario = "";
-
-    function __construct($nomeUsuario, $pwd) {
-        $this->pwd = $pwd;
-        $this->nomeUsuario = $nomeUsuario;
+    protected $pessoa = "";
+    protected $email = "";
+    
+    function getPessoa() {
+        return $this->pessoa;
     }
+
+    function getEmail() {
+        return $this->email;
+    }
+
+    function setPessoa($pessoa) {
+        $this->pessoa = $pessoa;
+    }
+
+    function setEmail($email) {
+        $this->email = $email;
+    }
+
+        function getNivel() {
+        return $this->nivel;
+    }
+
+    function setNivel($nivel) {
+        $this->nivel = $nivel;
+    }
+
 
     function getId() {
         return $this->id;
@@ -37,4 +60,14 @@ class Usuario {
         $this->nomeUsuario = $nomeUsuario;
     }
 
+    function __construct($pwd, $nivel, $nomeUsuario, $pessoa, $email) {
+        
+        $this->pwd = $pwd;
+        $this->nivel = $nivel;
+        $this->nomeUsuario = $nomeUsuario;
+        $this->pessoa = $pessoa;
+        $this->email = $email;
+    }
+
+    
 }

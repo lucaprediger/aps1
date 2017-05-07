@@ -27,4 +27,11 @@ class DB {
         return self::getInstance()->prepare($sql);
     }
 
+    public static function lastId($tab, $nomeId){
+          $sql = 'select MAX(' . $nomeId  . ') as maxId from '. $tab . ';'; 
+          $stm = self::prepare($sql);
+          $stm->execute();
+          $lastID = $stm->fetchColumn(); 
+          return $lastID;
+    }
 }

@@ -4,7 +4,7 @@ require_once './UsuarioDao.php';
 
 $nomeUsuario = $_POST['login'];
 $pwd = $_POST['senha'];
-$u = new UsuarioDao($nomeUsuario, $pwd);
+$u =  UsuarioDao::paraLogar($nomeUsuario, $pwd);
 
 if ($u->existeUsuario()) {
     echo 'usuarioLogado';
