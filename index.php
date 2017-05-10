@@ -32,7 +32,7 @@
             <div class="loginmodal-container">
                 <h1>Faça login para ter acesso</h1><br>
                 <form action="login.php" method="post" >
-                    Login:  <input type="text" name="login" size="20" maxlength="100"/>
+                    Login:  <input type="text" name="nomeUsuario" size="20" maxlength="100"/>
                     <br><br>
                     Senha:  <input type="password" name="senha" size="20" maxlength="16" />
                     <br><br>
