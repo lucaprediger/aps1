@@ -19,15 +19,20 @@ class PessoaDao extends Pessoa {
         return $instance;
     }
         
-     function newPessoa(){
-        $instance = new self("", "",0, 0, 0,"");
+     public static function newPessoa(){    //pra nao dar erro no php
+        $instance = new self("", "","", "", "", "");
         return $instance;
     }
     public function inserir() {
         $dbh = DB::getInstance();
-        $data = date('Y-m-d');
-        $sql = "INSERT INTO $this->tabela (pesNome, pesIdentificacao, pesCPF, pesDtNasc, pesEmail, pesRG)) 
-            values(:pesNome, :pesIdentificacao, :pesCPF, :pesDtNasc, :pesEmail, :pesRG)";;
+        
+        $data = explode('/', $this->dtNasc);     // transforma em array
+        $data = array_reverse($data); // inverte posicoes do array
+        $data = implode('-', $data);     // transforma em string novamente
+
+        
+        $sql = "INSERT INTO $this->tabela (pesNome, pesIdentificacao, pesCPF, pesDtNasc, pesEmail, pesRG) "
+                . "values(:pesNome, :pesIdentificacao, :pesCPF, :pesDtNasc, :pesEmail, :pesRG)";;
         $stm = $dbh->prepare($sql);
         $stm->bindParam(':pesNome', $this->nome);
         $stm->bindParam(':pesIdentificacao', $this->identificacao);

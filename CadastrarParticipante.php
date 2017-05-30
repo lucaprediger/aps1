@@ -16,6 +16,11 @@ $pwd = $_POST['senha'];
 $hash = md5(rand(0,1000));
 
 
+
+
+
+
+
 $p = PessoaDao::newPessoa();
 $p->setCpf($cpf);
 $p->setDtNasc($dtNasc);

@@ -9,7 +9,8 @@ class Pessoa{
     protected $rg = "";
     protected $identificacao =""; //RA ou matricula
     protected $dtNasc = "";
-     
+    protected $tabela = 'pessoas'; 
+    
     function getId() {
         return $this->id;
     }
@@ -77,7 +78,7 @@ class Pessoa{
     }
 
         
-    protected $tabela = 'pessoas';
+    
     function getTabela() {
         return $this->tabela;
     }
