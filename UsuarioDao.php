@@ -8,12 +8,12 @@ require_once './DB.php';
 
 class UsuarioDao extends Usuario {
 
-    function __construct($pwd, $nivel, $nomeUsuario, $pessoa, $email) {
-        parent::__construct($pwd, $nivel, $nomeUsuario, $pessoa, $email);
+    function __construct($pwd, $tipo, $nivel, $nomeUsuario, $pessoaID) {
+        parent::__construct($pwd, $tipo, $nivel, $nomeUsuario, $pessoaID);
     }
 
     function paraLogar($usuario, $senha) {
-        $instance = new self($senha, 0, $usuario, 0, "");
+        $instance = new self($senha, 0, 0, $usuario, 0);
         return $instance;
     }
 
@@ -44,14 +44,18 @@ class UsuarioDao extends Usuario {
     }
 
     public function cadastrarUsuario() {
-        //INSERT INTO eventus.usuarios (usuUsername, usuSenha, usuNivel, usuPessoa, email) VALUES ('luca', '1234', '1', '2', 'luca@gmail.com');
-        $sql = "INSERT INTO $this->tabela (usuUsername, usuSenha, usuNivel, usuPessoa, email) VALUES(:usuUsername, :usuSenha, :usuNivel, :usuPessoa, :email)";
+        //usuId`, `usuUsername`, `usuSenha`, `usuNivel`, `usuPesId`, `usuHash`, `usuAtivo`, `usuTipo`
+        
+        $sql = "INSERT INTO $this->tabela (usuUsername, usuSenha, usuNivel, usuPesId, usuHash, usuAtivo, usuTipo"
+                . ") VALUES(:usuUsername, :usuSenha, :usuNivel, :usuPesId, :usuHash, :usuAtivo, :usuTipo)";
         $stm = DB::prepare($sql);
         $stm->bindParam(':usuUsername', $this->nomeUsuario);
         $stm->bindParam(':usuSenha', $this->pwd);
         $stm->bindParam(':usuNivel', $this->nivel);
-        $stm->bindParam(':usuPessoa', $this->pessoa);
-        $stm->bindParam(':email', $this->email);
+        $stm->bindParam(':usuPesId', $this->pessoaID);
+        $stm->bindParam(':usuHash', $this->hash);
+        $stm->bindParam(':usuAtivo', $this->ativo);
+        $stm->bindParam(':usuTipo', $this->tipo);
         $stm->execute();
 
         return ($stm->rowCount() > 0);

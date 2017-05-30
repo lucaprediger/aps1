@@ -4,60 +4,79 @@ class Pessoa{
 
     protected $id = 0;
     protected $nome = "";
-    protected $tipo = '1';
+    protected $email = '';
     protected $cpf ="";
-    protected $identificacao ="";
-    
-    
+    protected $rg = "";
+    protected $identificacao =""; //RA ou matricula
+    protected $dtNasc = "";
+     
     function getId() {
         return $this->id;
     }
 
-    function setId($id) {
-        $this->id = $id;
-    }
-
-        
     function getNome() {
         return $this->nome;
     }
 
-    function getTipo() {
-        return $this->tipo;
+    function getEmail() {
+        return $this->email;
     }
 
     function getCpf() {
         return $this->cpf;
     }
 
+    function getRg() {
+        return $this->rg;
+    }
+
     function getIdentificacao() {
         return $this->identificacao;
+    }
+
+    function getDtNasc() {
+        return $this->dtNasc;
+    }
+
+    function setId($id) {
+        $this->id = $id;
     }
 
     function setNome($nome) {
         $this->nome = $nome;
     }
 
-    function setTipo($tipo) {
-        $this->tipo = $tipo;
+    function setEmail($email) {
+        $this->email = $email;
     }
 
     function setCpf($cpf) {
         $this->cpf = $cpf;
     }
 
+    function setRg($rg) {
+        $this->rg = $rg;
+    }
+
     function setIdentificacao($identificacao) {
         $this->identificacao = $identificacao;
     }
 
-    function __construct($nome, $tipo, $cpf, $identificacao) {
-        $this->nome = $nome;
-        $this->tipo = $tipo;
-        $this->cpf = $cpf;
-        $this->identificacao = $identificacao;
-     }
+    function setDtNasc($dtNasc) {
+        $this->dtNasc = $dtNasc;
+    }
 
     
+    function __construct($nome, $email, $cpf, $rg, $identificacao, $dtNasc) {
+        $this->nome = $nome;
+        $this->email = $email;
+        $this->cpf = $cpf;
+        $this->rg = $rg;
+        $this->identificacao = $identificacao;
+        $this->dtNasc = $dtNasc;
+    }
+
+        
     protected $tabela = 'pessoas';
     function getTabela() {
         return $this->tabela;

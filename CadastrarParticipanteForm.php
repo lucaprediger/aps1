@@ -16,13 +16,21 @@
                         <input type="hidden" name='nivelAcesso' value='0'>
                         Nome: <input type="text" name="nomePessoa" size="20" maxlength="150"/>
                         <br>
-                        Tipo: 
-                        <select name="tipo">
+                        Nível: 
+                        <select name="nivel">
                             <option value="0">Administrador</option>
                             <option value="1">Comum</option>
                         </select>
                         <br>
-                        Email: <input type="text" name="mailAccount" size="40" maxlength="200"/>
+                        Identificaçao: <input type="text" name="identificacao" size="40" maxlength="200" placeholder="RA, matricula"/>
+                        <br>
+                        CPF: <input type="text" name="CPF" size="40" maxlength="200"/>
+                        <br>
+                        RG: <input type="text" name="RG" size="40" maxlength="200"/>
+                        <br>
+                        Data de nascimento:<input type="date" name="dtNasc" size="40" maxlength="200"/>
+                        <br>
+                        Email: <input type="text" name="email" size="40" maxlength="200"/>
                         <br>
                         Nome de usuário:  <input type="text" name="login" size="40" maxlength="12"/>
                         <br>

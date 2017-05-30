@@ -12,16 +12,11 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- Schema eventus
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `eventus` DEFAULT CHARACTER SET utf8 ;
--- -----------------------------------------------------
--- Schema new_db
--- -----------------------------------------------------
 USE `eventus` ;
 
 -- -----------------------------------------------------
 -- Table `eventus`.`eventos`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eventus`.`eventos` ;
-
 CREATE TABLE IF NOT EXISTS `eventus`.`eventos` (
   `EveID` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
   `EveNome` VARCHAR(45) NOT NULL COMMENT '',
@@ -40,8 +35,6 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `eventus`.`atividades`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eventus`.`atividades` ;
-
 CREATE TABLE IF NOT EXISTS `eventus`.`atividades` (
   `atiId` INT(11) NOT NULL COMMENT '',
   `atiInicio` DATETIME NOT NULL COMMENT '',
@@ -57,43 +50,20 @@ CREATE TABLE IF NOT EXISTS `eventus`.`atividades` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 22
 DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
--- Table `eventus`.`ministrantes`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `eventus`.`ministrantes` ;
-
-CREATE TABLE IF NOT EXISTS `eventus`.`ministrantes` (
-  `MinID` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
-  `MinNome` VARCHAR(75) NOT NULL COMMENT '',
-  `MinInstituicao` VARCHAR(75) NOT NULL COMMENT '',
-  `MinCelular` VARCHAR(11) NULL DEFAULT NULL COMMENT '',
-  `MinEmail` VARCHAR(100) NOT NULL COMMENT '',
-  `MinCusto` DECIMAL(12,2) NULL DEFAULT NULL COMMENT '',
-  PRIMARY KEY (`MinID`)  COMMENT '')
-ENGINE = InnoDB
-AUTO_INCREMENT = 6
-DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
 -- Table `eventus`.`pessoas`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eventus`.`pessoas` ;
-
 CREATE TABLE IF NOT EXISTS `eventus`.`pessoas` (
   `pesId` BIGINT(11) NOT NULL AUTO_INCREMENT COMMENT '',
   `pesNome` VARCHAR(100) NOT NULL COMMENT '',
-  `pesTipo` INT(11) NOT NULL COMMENT '',
-  `pesIdentificacao` VARCHAR(30) NULL DEFAULT NULL COMMENT '',
+  `pesIdentificacao` VARCHAR(30) NULL COMMENT '',
   `pesCPF` VARCHAR(11) NOT NULL COMMENT '',
   `pesDtNasc` DATE NOT NULL COMMENT '',
   `pesEmail` VARCHAR(200) NOT NULL COMMENT '',
-  `pesRG` VARCHAR(15) NOT NULL COMMENT '',
-  `pessoascol` VARCHAR(45) NOT NULL COMMENT '',
+  `pesRG` VARCHAR(15) NULL COMMENT '',
   PRIMARY KEY (`pesId`)  COMMENT '')
 ENGINE = InnoDB
 AUTO_INCREMENT = 50
@@ -101,36 +71,17 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `eventus`.`recursos`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `eventus`.`recursos` ;
-
-CREATE TABLE IF NOT EXISTS `eventus`.`recursos` (
-  `RecId` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
-  `RecDescricao` VARCHAR(75) NOT NULL COMMENT '',
-  `RecCusto` DECIMAL(5,2) NULL DEFAULT '0.00' COMMENT '',
-  PRIMARY KEY (`RecId`)  COMMENT '')
-ENGINE = InnoDB
-AUTO_INCREMENT = 11
-DEFAULT CHARACTER SET = utf8
-COMMENT = '	';
-
-
--- -----------------------------------------------------
 -- Table `eventus`.`usuarios`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eventus`.`usuarios` ;
-
 CREATE TABLE IF NOT EXISTS `eventus`.`usuarios` (
   `usuId` BIGINT(11) NOT NULL AUTO_INCREMENT COMMENT '',
   `usuUsername` VARCHAR(15) NOT NULL COMMENT '',
   `usuSenha` VARCHAR(15) NOT NULL COMMENT '',
   `usuNivel` INT(11) NOT NULL COMMENT '',
-  `usuPessoa` INT(11) NOT NULL COMMENT '',
-  `email` VARCHAR(200) NOT NULL COMMENT '',
   `usuPesId` BIGINT(11) NOT NULL COMMENT '',
   `usuHash` VARCHAR(32) NOT NULL COMMENT '',
-  `usuAtivo` INT(1) NOT NULL DEFAULT 0 COMMENT '',
+  `usuAtivo` INT(1) NOT NULL DEFAULT '0' COMMENT '',
+  `usuTipo` INT(1) NOT NULL COMMENT '',
   PRIMARY KEY (`usuId`)  COMMENT '',
   INDEX `fk_usuarios_pessoas1_idx` (`usuPesId` ASC)  COMMENT '',
   CONSTRAINT `fk_usuarios_pessoas1`
@@ -144,83 +95,8 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `eventus`.`TipoUsuario`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `eventus`.`TipoUsuario` ;
-
-CREATE TABLE IF NOT EXISTS `eventus`.`TipoUsuario` (
-  `tusId` BIGINT(11) NOT NULL COMMENT '',
-  `tusDescrição` VARCHAR(45) NULL COMMENT '',
-  `tusUsuId` BIGINT(11) NOT NULL COMMENT '',
-  `TipoUsuariocol` VARCHAR(45) NULL COMMENT '',
-  PRIMARY KEY (`tusId`)  COMMENT '',
-  INDEX `fk_TipoUsuario_usuarios1_idx` (`tusUsuId` ASC)  COMMENT '',
-  CONSTRAINT `fk_TipoUsuario_usuarios1`
-    FOREIGN KEY (`tusUsuId`)
-    REFERENCES `eventus`.`usuarios` (`usuId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `eventus`.`permissoes`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `eventus`.`permissoes` ;
-
-CREATE TABLE IF NOT EXISTS `eventus`.`permissoes` (
-  `perId` BIGINT(11) NOT NULL COMMENT '',
-  `perPermissao` VARCHAR(45) NULL COMMENT '',
-  `perTiuTusId` BIGINT(11) NOT NULL COMMENT '',
-  PRIMARY KEY (`perId`)  COMMENT '',
-  INDEX `fk_permissoes_TipoUsuario1_idx` (`perTiuTusId` ASC)  COMMENT '',
-  CONSTRAINT `fk_permissoes_TipoUsuario1`
-    FOREIGN KEY (`perTiuTusId`)
-    REFERENCES `eventus`.`TipoUsuario` (`tusId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `eventus`.`palestras`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `eventus`.`palestras` ;
-
-CREATE TABLE IF NOT EXISTS `eventus`.`palestras` (
-  `palPalId` INT NOT NULL COMMENT '',
-  `atividades_id` INT(11) NOT NULL COMMENT '',
-  PRIMARY KEY (`palPalId`)  COMMENT '',
-  INDEX `fk_palestras_atividades1_idx` (`atividades_id` ASC)  COMMENT '',
-  CONSTRAINT `fk_palestras_atividades1`
-    FOREIGN KEY (`atividades_id`)
-    REFERENCES `eventus`.`atividades` (`atiId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `eventus`.`minicursos`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `eventus`.`minicursos` ;
-
-CREATE TABLE IF NOT EXISTS `eventus`.`minicursos` (
-  `atividades_id` INT(11) NOT NULL COMMENT '',
-  INDEX `fk_minicursos_atividades1_idx` (`atividades_id` ASC)  COMMENT '',
-  CONSTRAINT `fk_minicursos_atividades1`
-    FOREIGN KEY (`atividades_id`)
-    REFERENCES `eventus`.`atividades` (`atiId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `eventus`.`atividades_has_usuarios`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `eventus`.`atividades_has_usuarios` ;
-
 CREATE TABLE IF NOT EXISTS `eventus`.`atividades_has_usuarios` (
   `atividades_id` INT(11) NOT NULL COMMENT '',
   `usuarios_usuId` BIGINT(11) NOT NULL COMMENT '',
@@ -239,6 +115,105 @@ CREATE TABLE IF NOT EXISTS `eventus`.`atividades_has_usuarios` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `eventus`.`minicursos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `eventus`.`minicursos` (
+  `atividades_id` INT(11) NOT NULL COMMENT '',
+  INDEX `fk_minicursos_atividades1_idx` (`atividades_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_minicursos_atividades1`
+    FOREIGN KEY (`atividades_id`)
+    REFERENCES `eventus`.`atividades` (`atiId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `eventus`.`ministrantes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `eventus`.`ministrantes` (
+  `MinID` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
+  `MinNome` VARCHAR(75) NOT NULL COMMENT '',
+  `MinInstituicao` VARCHAR(75) NOT NULL COMMENT '',
+  `MinCelular` VARCHAR(11) NULL DEFAULT NULL COMMENT '',
+  `MinEmail` VARCHAR(100) NOT NULL COMMENT '',
+  `MinCusto` DECIMAL(12,2) NULL DEFAULT NULL COMMENT '',
+  PRIMARY KEY (`MinID`)  COMMENT '')
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `eventus`.`palestras`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `eventus`.`palestras` (
+  `palPalId` INT(11) NOT NULL COMMENT '',
+  `atividades_id` INT(11) NOT NULL COMMENT '',
+  PRIMARY KEY (`palPalId`)  COMMENT '',
+  INDEX `fk_palestras_atividades1_idx` (`atividades_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_palestras_atividades1`
+    FOREIGN KEY (`atividades_id`)
+    REFERENCES `eventus`.`atividades` (`atiId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `eventus`.`tipousuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `eventus`.`tipousuario` (
+  `tusId` BIGINT(11) NOT NULL COMMENT '',
+  `tusDescrição` VARCHAR(45) NULL DEFAULT NULL COMMENT '',
+  `tusUsuId` BIGINT(11) NOT NULL COMMENT '',
+  `TipoUsuariocol` VARCHAR(45) NULL DEFAULT NULL COMMENT '',
+  PRIMARY KEY (`tusId`)  COMMENT '',
+  INDEX `fk_TipoUsuario_usuarios1_idx` (`tusUsuId` ASC)  COMMENT '',
+  CONSTRAINT `fk_TipoUsuario_usuarios1`
+    FOREIGN KEY (`tusUsuId`)
+    REFERENCES `eventus`.`usuarios` (`usuId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `eventus`.`permissoes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `eventus`.`permissoes` (
+  `perId` BIGINT(11) NOT NULL COMMENT '',
+  `perPermissao` VARCHAR(45) NULL DEFAULT NULL COMMENT '',
+  `perTiuTusId` BIGINT(11) NOT NULL COMMENT '',
+  PRIMARY KEY (`perId`)  COMMENT '',
+  INDEX `fk_permissoes_TipoUsuario1_idx` (`perTiuTusId` ASC)  COMMENT '',
+  CONSTRAINT `fk_permissoes_TipoUsuario1`
+    FOREIGN KEY (`perTiuTusId`)
+    REFERENCES `eventus`.`tipousuario` (`tusId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `eventus`.`recursos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `eventus`.`recursos` (
+  `RecId` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
+  `RecDescricao` VARCHAR(75) NOT NULL COMMENT '',
+  `RecCusto` DECIMAL(5,2) NULL DEFAULT '0.00' COMMENT '',
+  PRIMARY KEY (`RecId`)  COMMENT '')
+ENGINE = InnoDB
+AUTO_INCREMENT = 11
+DEFAULT CHARACTER SET = utf8
+COMMENT = '	';
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

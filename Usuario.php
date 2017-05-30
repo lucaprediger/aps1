@@ -3,38 +3,19 @@
 
 class Usuario {
 
-    protected $tabela = "usuarios";
+    protected $tabela = "usuarios"; //nome da tabela
     protected $id = "";
-    protected $pwd = "";
+    protected $pwd = ""; 
+    protected $tipo = "";
     protected $nivel = "";
-    protected $nomeUsuario = "";
-    protected $pessoa = "";
-    protected $email = "";
+    protected $nomeUsuario = ""; //username
+    protected $pessoaID = "";
+    protected $ativo = "";
+    protected $hash = "";
     
-    function getPessoa() {
-        return $this->pessoa;
+    function getTabela() {
+        return $this->tabela;
     }
-
-    function getEmail() {
-        return $this->email;
-    }
-
-    function setPessoa($pessoa) {
-        $this->pessoa = $pessoa;
-    }
-
-    function setEmail($email) {
-        $this->email = $email;
-    }
-
-        function getNivel() {
-        return $this->nivel;
-    }
-
-    function setNivel($nivel) {
-        $this->nivel = $nivel;
-    }
-
 
     function getId() {
         return $this->id;
@@ -44,8 +25,32 @@ class Usuario {
         return $this->pwd;
     }
 
+    function getTipo() {
+        return $this->tipo;
+    }
+
+    function getNivel() {
+        return $this->nivel;
+    }
+
     function getNomeUsuario() {
         return $this->nomeUsuario;
+    }
+
+    function getPessoaID() {
+        return $this->pessoaID;
+    }
+
+    function getAtivo() {
+        return $this->ativo;
+    }
+
+    function getHash() {
+        return $this->hash;
+    }
+
+    function setTabela($tabela) {
+        $this->tabela = $tabela;
     }
 
     function setId($id) {
@@ -56,18 +61,39 @@ class Usuario {
         $this->pwd = $pwd;
     }
 
+    function setTipo($tipo) {
+        $this->tipo = $tipo;
+    }
+
+    function setNivel($nivel) {
+        $this->nivel = $nivel;
+    }
+
     function setNomeUsuario($nomeUsuario) {
         $this->nomeUsuario = $nomeUsuario;
     }
 
-    function __construct($pwd, $nivel, $nomeUsuario, $pessoa, $email) {
-        
+    function setPessoaID($pessoaID) {
+        $this->pessoaID = $pessoaID;
+    }
+
+    function setAtivo($ativo) {
+        $this->ativo = $ativo;
+    }
+
+    function setHash($hash) {
+        $this->hash = $hash;
+    }
+
+    function __construct($pwd, $tipo, $nivel, $nomeUsuario, $pessoaID) {
         $this->pwd = $pwd;
+        $this->tipo = $tipo;
         $this->nivel = $nivel;
         $this->nomeUsuario = $nomeUsuario;
-        $this->pessoa = $pessoa;
-        $this->email = $email;
+        $this->pessoaID = $pessoaID;
+        $this->ativo = 0;
     }
+
 
     
 }
