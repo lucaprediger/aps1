@@ -1,294 +1,246 @@
--- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: 07-Maio-2017 às 02:23
--- Versão do servidor: 5.7.18-0ubuntu0.16.04.1
--- PHP Version: 7.1.1
+-- MySQL Workbench Forward Engineering
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema eventus
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema eventus
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `eventus` DEFAULT CHARACTER SET utf8 ;
+-- -----------------------------------------------------
+-- Schema new_db
+-- -----------------------------------------------------
+USE `eventus` ;
+
+-- -----------------------------------------------------
+-- Table `eventus`.`eventos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `eventus`.`eventos` ;
+
+CREATE TABLE IF NOT EXISTS `eventus`.`eventos` (
+  `EveID` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
+  `EveNome` VARCHAR(45) NOT NULL COMMENT '',
+  `EveDataIni` DATE NOT NULL COMMENT '',
+  `EveDataFim` DATE NOT NULL COMMENT '',
+  `eveLocal` VARCHAR(45) NOT NULL COMMENT '',
+  `eveCampus` VARCHAR(45) NOT NULL COMMENT '',
+  `email` VARCHAR(200) NOT NULL COMMENT '',
+  `eventoscol` VARCHAR(45) NOT NULL COMMENT '',
+  PRIMARY KEY (`EveID`)  COMMENT '')
+ENGINE = InnoDB
+AUTO_INCREMENT = 11
+DEFAULT CHARACTER SET = utf8;
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+-- -----------------------------------------------------
+-- Table `eventus`.`atividades`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `eventus`.`atividades` ;
 
---
--- Database: `eventus`
---
+CREATE TABLE IF NOT EXISTS `eventus`.`atividades` (
+  `atiId` INT(11) NOT NULL COMMENT '',
+  `atiInicio` DATETIME NOT NULL COMMENT '',
+  `atiFim` DATETIME NOT NULL COMMENT '',
+  `atiTema` VARCHAR(150) NOT NULL COMMENT '',
+  `atiNome` VARCHAR(45) NOT NULL COMMENT '',
+  `atiEveEveId` INT(11) NOT NULL COMMENT '',
+  PRIMARY KEY (`atiId`)  COMMENT '',
+  INDEX `fk_atividades_eventos1_idx` (`atiEveEveId` ASC)  COMMENT '',
+  CONSTRAINT `fk_atividades_eventos1`
+    FOREIGN KEY (`atiEveEveId`)
+    REFERENCES `eventus`.`eventos` (`EveID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 22
+DEFAULT CHARACTER SET = latin1;
 
--- --------------------------------------------------------
 
---
--- Estrutura da tabela `eventos`
---
+-- -----------------------------------------------------
+-- Table `eventus`.`ministrantes`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `eventus`.`ministrantes` ;
 
-CREATE TABLE `eventos` (
-  `EveID` int(11) NOT NULL,
-  `EveNome` varchar(45) NOT NULL,
-  `EveDataIni` date NOT NULL,
-  `EveDataFim` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `eventus`.`ministrantes` (
+  `MinID` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
+  `MinNome` VARCHAR(75) NOT NULL COMMENT '',
+  `MinInstituicao` VARCHAR(75) NOT NULL COMMENT '',
+  `MinCelular` VARCHAR(11) NULL DEFAULT NULL COMMENT '',
+  `MinEmail` VARCHAR(100) NOT NULL COMMENT '',
+  `MinCusto` DECIMAL(12,2) NULL DEFAULT NULL COMMENT '',
+  PRIMARY KEY (`MinID`)  COMMENT '')
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = utf8;
 
---
--- Extraindo dados da tabela `eventos`
---
 
-INSERT INTO `eventos` (`EveID`, `EveNome`, `EveDataIni`, `EveDataFim`) VALUES
-(7, 'SETAC 2015', '2015-11-23', '2015-11-26'),
-(8, 'SABIO 2014', '2014-09-09', '2014-10-23'),
-(10, 'SETAC', '2015-11-19', '2015-11-23');
+-- -----------------------------------------------------
+-- Table `eventus`.`pessoas`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `eventus`.`pessoas` ;
 
--- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `eventus`.`pessoas` (
+  `pesId` BIGINT(11) NOT NULL AUTO_INCREMENT COMMENT '',
+  `pesNome` VARCHAR(100) NOT NULL COMMENT '',
+  `pesTipo` INT(11) NOT NULL COMMENT '',
+  `pesIdentificacao` VARCHAR(30) NULL DEFAULT NULL COMMENT '',
+  `pesCPF` VARCHAR(11) NOT NULL COMMENT '',
+  `pesDtNasc` DATE NOT NULL COMMENT '',
+  `pesEmail` VARCHAR(200) NOT NULL COMMENT '',
+  `pesRG` VARCHAR(15) NOT NULL COMMENT '',
+  `pessoascol` VARCHAR(45) NOT NULL COMMENT '',
+  PRIMARY KEY (`pesId`)  COMMENT '')
+ENGINE = InnoDB
+AUTO_INCREMENT = 50
+DEFAULT CHARACTER SET = latin1;
 
---
--- Estrutura da tabela `events`
---
 
-CREATE TABLE `events` (
-  `id` int(11) NOT NULL,
-  `start` datetime DEFAULT NULL,
-  `end` datetime DEFAULT NULL,
-  `resource` varchar(30) DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+-- -----------------------------------------------------
+-- Table `eventus`.`recursos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `eventus`.`recursos` ;
 
---
--- Extraindo dados da tabela `events`
---
+CREATE TABLE IF NOT EXISTS `eventus`.`recursos` (
+  `RecId` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
+  `RecDescricao` VARCHAR(75) NOT NULL COMMENT '',
+  `RecCusto` DECIMAL(5,2) NULL DEFAULT '0.00' COMMENT '',
+  PRIMARY KEY (`RecId`)  COMMENT '')
+ENGINE = InnoDB
+AUTO_INCREMENT = 11
+DEFAULT CHARACTER SET = utf8
+COMMENT = '	';
 
-INSERT INTO `events` (`id`, `start`, `end`, `resource`, `name`) VALUES
-(14, '2017-06-05 09:00:00', '2017-06-05 12:00:00', NULL, 'palestra joao'),
-(15, '2017-06-05 11:30:00', '2017-06-05 13:00:00', NULL, 'arduino'),
-(16, '2017-04-18 12:00:00', '2017-04-18 14:30:00', NULL, 'Event'),
-(17, '2017-04-19 10:00:00', '2017-04-19 11:30:00', NULL, 'Event'),
-(18, '2017-04-17 09:30:00', '2017-04-17 11:00:00', NULL, 'cafe'),
-(19, '2017-04-19 14:00:00', '2017-04-19 16:30:00', NULL, 'Event'),
-(20, '2017-04-17 12:00:00', '2017-04-17 12:30:00', NULL, 'Event'),
-(21, '2017-04-26 09:30:00', '2017-04-26 11:00:00', NULL, 'Event');
 
--- --------------------------------------------------------
+-- -----------------------------------------------------
+-- Table `eventus`.`usuarios`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `eventus`.`usuarios` ;
 
---
--- Estrutura da tabela `ministrantes`
---
+CREATE TABLE IF NOT EXISTS `eventus`.`usuarios` (
+  `usuId` BIGINT(11) NOT NULL AUTO_INCREMENT COMMENT '',
+  `usuUsername` VARCHAR(15) NOT NULL COMMENT '',
+  `usuSenha` VARCHAR(15) NOT NULL COMMENT '',
+  `usuNivel` INT(11) NOT NULL COMMENT '',
+  `usuPessoa` INT(11) NOT NULL COMMENT '',
+  `email` VARCHAR(200) NOT NULL COMMENT '',
+  `usuPesId` BIGINT(11) NOT NULL COMMENT '',
+  `usuHash` VARCHAR(32) NOT NULL COMMENT '',
+  `usuAtivo` INT(1) NOT NULL DEFAULT 0 COMMENT '',
+  PRIMARY KEY (`usuId`)  COMMENT '',
+  INDEX `fk_usuarios_pessoas1_idx` (`usuPesId` ASC)  COMMENT '',
+  CONSTRAINT `fk_usuarios_pessoas1`
+    FOREIGN KEY (`usuPesId`)
+    REFERENCES `eventus`.`pessoas` (`pesId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 8
+DEFAULT CHARACTER SET = latin1;
 
-CREATE TABLE `ministrantes` (
-  `MinID` int(11) NOT NULL,
-  `MinNome` varchar(75) NOT NULL,
-  `MinInstituicao` varchar(75) NOT NULL,
-  `MinCelular` varchar(11) DEFAULT NULL,
-  `MinEmail` varchar(100) NOT NULL,
-  `MinCusto` decimal(12,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Extraindo dados da tabela `ministrantes`
---
+-- -----------------------------------------------------
+-- Table `eventus`.`TipoUsuario`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `eventus`.`TipoUsuario` ;
 
-INSERT INTO `ministrantes` (`MinID`, `MinNome`, `MinInstituicao`, `MinCelular`, `MinEmail`, `MinCusto`) VALUES
-(1, 'João de Souza', 'UTFPR', '4388194012', 'jsouza@utfpr.edu.br', '400.00'),
-(2, 'Carmem Almeida', 'UFPB', '8298124512', 'cmsalmeida@ufpb.edu.br', '1400.22'),
-(3, 'Rita Pereira', 'UFRS', '519443312', 'rmaleida@ufrs.edu.br', '700.22'),
-(4, 'Almir Andrade', 'UNIOESTE', '4587432312', 'aandrade@unioeste.edu.br', '800.22'),
-(5, 'Josélia Ribas', 'UTFPR', '4499887766', 'josribas@utfpr.edu.br', '389.00');
+CREATE TABLE IF NOT EXISTS `eventus`.`TipoUsuario` (
+  `tusId` BIGINT(11) NOT NULL COMMENT '',
+  `tusDescrição` VARCHAR(45) NULL COMMENT '',
+  `tusUsuId` BIGINT(11) NOT NULL COMMENT '',
+  `TipoUsuariocol` VARCHAR(45) NULL COMMENT '',
+  PRIMARY KEY (`tusId`)  COMMENT '',
+  INDEX `fk_TipoUsuario_usuarios1_idx` (`tusUsuId` ASC)  COMMENT '',
+  CONSTRAINT `fk_TipoUsuario_usuarios1`
+    FOREIGN KEY (`tusUsuId`)
+    REFERENCES `eventus`.`usuarios` (`usuId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
--- --------------------------------------------------------
 
---
--- Estrutura da tabela `permissoesUsuario`
---
+-- -----------------------------------------------------
+-- Table `eventus`.`permissoes`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `eventus`.`permissoes` ;
 
-CREATE TABLE `permissoesUsuario` (
-  `pusId` int(11) NOT NULL,
-  `pusPagina` varchar(45) NOT NULL,
-  `pusUsuId` bigint(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `eventus`.`permissoes` (
+  `perId` BIGINT(11) NOT NULL COMMENT '',
+  `perPermissao` VARCHAR(45) NULL COMMENT '',
+  `perTiuTusId` BIGINT(11) NOT NULL COMMENT '',
+  PRIMARY KEY (`perId`)  COMMENT '',
+  INDEX `fk_permissoes_TipoUsuario1_idx` (`perTiuTusId` ASC)  COMMENT '',
+  CONSTRAINT `fk_permissoes_TipoUsuario1`
+    FOREIGN KEY (`perTiuTusId`)
+    REFERENCES `eventus`.`TipoUsuario` (`tusId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
---
--- Extraindo dados da tabela `permissoesUsuario`
---
 
-INSERT INTO `permissoesUsuario` (`pusId`, `pusPagina`, `pusUsuId`) VALUES
-(1, 'CadastrarUsuario', 1);
+-- -----------------------------------------------------
+-- Table `eventus`.`palestras`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `eventus`.`palestras` ;
 
--- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `eventus`.`palestras` (
+  `palPalId` INT NOT NULL COMMENT '',
+  `atividades_id` INT(11) NOT NULL COMMENT '',
+  PRIMARY KEY (`palPalId`)  COMMENT '',
+  INDEX `fk_palestras_atividades1_idx` (`atividades_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_palestras_atividades1`
+    FOREIGN KEY (`atividades_id`)
+    REFERENCES `eventus`.`atividades` (`atiId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
---
--- Estrutura da tabela `pessoas`
---
 
-CREATE TABLE `pessoas` (
-  `pesId` bigint(11) NOT NULL,
-  `pesNome` varchar(100) NOT NULL,
-  `pesTipo` int(11) NOT NULL,
-  `pesIdentificacao` varchar(30) DEFAULT NULL,
-  `pesCPF` varchar(11) NOT NULL,
-  `pesDtNasc` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+-- -----------------------------------------------------
+-- Table `eventus`.`minicursos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `eventus`.`minicursos` ;
 
---
--- Extraindo dados da tabela `pessoas`
---
+CREATE TABLE IF NOT EXISTS `eventus`.`minicursos` (
+  `atividades_id` INT(11) NOT NULL COMMENT '',
+  INDEX `fk_minicursos_atividades1_idx` (`atividades_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_minicursos_atividades1`
+    FOREIGN KEY (`atividades_id`)
+    REFERENCES `eventus`.`atividades` (`atiId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
-INSERT INTO `pessoas` (`pesId`, `pesNome`, `pesTipo`, `pesIdentificacao`, `pesCPF`, `pesDtNasc`) VALUES
-(47, 'marcio', 1, '', '0', NULL),
-(48, 'luca', 1, '', '0', NULL),
-(49, '', 1, '', '0', NULL);
 
--- --------------------------------------------------------
+-- -----------------------------------------------------
+-- Table `eventus`.`atividades_has_usuarios`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `eventus`.`atividades_has_usuarios` ;
 
---
--- Estrutura da tabela `recursos`
---
+CREATE TABLE IF NOT EXISTS `eventus`.`atividades_has_usuarios` (
+  `atividades_id` INT(11) NOT NULL COMMENT '',
+  `usuarios_usuId` BIGINT(11) NOT NULL COMMENT '',
+  PRIMARY KEY (`atividades_id`, `usuarios_usuId`)  COMMENT '',
+  INDEX `fk_atividades_has_usuarios_usuarios1_idx` (`usuarios_usuId` ASC)  COMMENT '',
+  INDEX `fk_atividades_has_usuarios_atividades1_idx` (`atividades_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_atividades_has_usuarios_atividades1`
+    FOREIGN KEY (`atividades_id`)
+    REFERENCES `eventus`.`atividades` (`atiId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_atividades_has_usuarios_usuarios1`
+    FOREIGN KEY (`usuarios_usuId`)
+    REFERENCES `eventus`.`usuarios` (`usuId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
-CREATE TABLE `recursos` (
-  `RecId` int(11) NOT NULL,
-  `RecDescricao` varchar(75) NOT NULL,
-  `RecCusto` decimal(5,2) DEFAULT '0.00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='	';
 
---
--- Extraindo dados da tabela `recursos`
---
-
-INSERT INTO `recursos` (`RecId`, `RecDescricao`, `RecCusto`) VALUES
-(1, 'Pincel marcador', '3.23'),
-(2, 'Agua mineral 600ml', '1.92'),
-(3, 'Caneta azul', '0.70'),
-(4, 'Bloco de anotação', '0.79'),
-(5, 'Caneta amarela', '0.95'),
-(6, 'Caneta azul', '0.95'),
-(7, 'Caneta verde', '0.70'),
-(10, 'bastão', '90.87');
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `usuarios`
---
-
-CREATE TABLE `usuarios` (
-  `usuId` bigint(11) NOT NULL,
-  `usuUsername` varchar(15) NOT NULL,
-  `usuSenha` varchar(15) NOT NULL,
-  `usuNivel` int(11) NOT NULL,
-  `usuPessoa` int(11) NOT NULL,
-  `email` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `usuarios`
---
-
-INSERT INTO `usuarios` (`usuId`, `usuUsername`, `usuSenha`, `usuNivel`, `usuPessoa`, `email`) VALUES
-(1, 'marcio', '1234', 1, 1, 'marcioaraujo@gmail.com'),
-(2, 'luca', '1234', 1, 2, 'luca@gmail.com'),
-(3, '4', '4', 0, 45, '444'),
-(4, 'pereira', '2222', 0, 46, 'pereira@bol.com.br'),
-(5, 'marcio', '1234', 0, 47, 'marcio@marcio.com'),
-(6, 'luca', '1111', 0, 48, 'luca@luca'),
-(7, 'Confirmar', '', 0, 49, '');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `eventos`
---
-ALTER TABLE `eventos`
-  ADD PRIMARY KEY (`EveID`);
-
---
--- Indexes for table `events`
---
-ALTER TABLE `events`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `ministrantes`
---
-ALTER TABLE `ministrantes`
-  ADD PRIMARY KEY (`MinID`);
-
---
--- Indexes for table `permissoesUsuario`
---
-ALTER TABLE `permissoesUsuario`
-  ADD PRIMARY KEY (`pusId`),
-  ADD KEY `fk_permissoesUsuario_1_idx` (`pusUsuId`);
-
---
--- Indexes for table `pessoas`
---
-ALTER TABLE `pessoas`
-  ADD PRIMARY KEY (`pesId`);
-
---
--- Indexes for table `recursos`
---
-ALTER TABLE `recursos`
-  ADD PRIMARY KEY (`RecId`);
-
---
--- Indexes for table `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`usuId`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `eventos`
---
-ALTER TABLE `eventos`
-  MODIFY `EveID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
---
--- AUTO_INCREMENT for table `events`
---
-ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
---
--- AUTO_INCREMENT for table `ministrantes`
---
-ALTER TABLE `ministrantes`
-  MODIFY `MinID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `permissoesUsuario`
---
-ALTER TABLE `permissoesUsuario`
-  MODIFY `pusId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `pessoas`
---
-ALTER TABLE `pessoas`
-  MODIFY `pesId` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
---
--- AUTO_INCREMENT for table `recursos`
---
-ALTER TABLE `recursos`
-  MODIFY `RecId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
---
--- AUTO_INCREMENT for table `usuarios`
---
-ALTER TABLE `usuarios`
-  MODIFY `usuId` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
---
--- Constraints for dumped tables
---
-
---
--- Limitadores para a tabela `permissoesUsuario`
---
-ALTER TABLE `permissoesUsuario`
-  ADD CONSTRAINT `fk_permissoesUsuario_1` FOREIGN KEY (`pusUsuId`) REFERENCES `usuarios` (`usuId`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

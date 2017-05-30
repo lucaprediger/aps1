@@ -28,7 +28,7 @@
                         <br>
                         Senha:  <input type="password" name="senha" size="40" maxlength="16" />
                         <br>                  
-                        <input type="submit" name="login" class="login loginmodal-submit" value="Confirmar">
+                        <input type="submit" name="cadastrar" class="login loginmodal-submit" value="Confirmar">
                     </form>
                 </fieldset>
             </div>
