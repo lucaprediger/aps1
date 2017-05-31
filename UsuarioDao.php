@@ -12,7 +12,7 @@ class UsuarioDao extends Usuario {
         parent::__construct($pwd, $tipo, $nivel, $nomeUsuario, $pessoaID);
     }
 
-    function paraLogar($usuario, $senha) {
+    public static function paraLogar($usuario, $senha) {
         $instance = new self($senha, 0, 0, $usuario, 0);
         return $instance;
     }

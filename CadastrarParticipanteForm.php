@@ -28,7 +28,7 @@
                         <br>
                         RG: <input type="text" name="RG" value="456789" size="40" maxlength="200"/>
                         <br>
-                        Data de nascimento:<input type="date" name="dtNasc" value="10/10/2010" size="40" maxlength="200"/>
+                        Data de nascimento:<input type="date" name="dtNasc" value="2010-10-10" size="40" maxlength="200"/>
                         <br>
                         Email: <input type="text" name="email" size="40" value="marciomjapr@gmail.com" maxlength="200"/>
                         <br>
