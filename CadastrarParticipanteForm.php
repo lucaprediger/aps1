@@ -14,7 +14,7 @@
                     <label>Cadastro de usuário</label>
                     <form action="CadastrarParticipante.php" method="post">  
                         <input type="hidden" name='nivelAcesso' value='0'>
-                        Nome: <input type="text" name="nomePessoa" size="20" maxlength="150"/>
+                        Nome: <input type="text" name="nomePessoa" size="20" value="marcio" maxlength="150"/>
                         <br>
                         Nível: 
                         <select name="nivel">
@@ -22,19 +22,19 @@
                             <option value="1">Comum</option>
                         </select>
                         <br>
-                        Identificaçao: <input type="text" name="identificacao" size="40" maxlength="200" placeholder="RA, matricula"/>
+                        Identificaçao: <input type="text" name="identificacao" value="3456789" size="40" maxlength="200" placeholder="RA, matricula"/>
                         <br>
-                        CPF: <input type="text" name="CPF" size="40" maxlength="200"/>
+                        CPF: <input type="text" name="CPF" size="40" value="456789" maxlength="200"/>
                         <br>
-                        RG: <input type="text" name="RG" size="40" maxlength="200"/>
+                        RG: <input type="text" name="RG" value="456789" size="40" maxlength="200"/>
                         <br>
-                        Data de nascimento:<input type="date" name="dtNasc" size="40" maxlength="200"/>
+                        Data de nascimento:<input type="date" name="dtNasc" value="10/10/2010" size="40" maxlength="200"/>
                         <br>
-                        Email: <input type="text" name="email" size="40" maxlength="200"/>
+                        Email: <input type="text" name="email" size="40" value="marciomjapr@gmail.com" maxlength="200"/>
                         <br>
-                        Nome de usuário:  <input type="text" name="login" size="40" maxlength="12"/>
+                        Nome de usuário:  <input type="text" name="login" value="joao"  size="40" maxlength="12"/>
                         <br>
-                        Senha:  <input type="password" name="senha" size="40" maxlength="16" />
+                        Senha:  <input type="password" name="senha" size="40" value="1234" maxlength="16" />
                         <br>                  
                         <input type="submit" name="cadastrar" class="login loginmodal-submit" value="Confirmar">
                     </form>
