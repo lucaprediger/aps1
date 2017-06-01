@@ -6,6 +6,8 @@ require_once './PessoaDao.php';
 require_once './PHPMailer-master/PHPMailer-master/class.phpmailer.php';
 require_once './PHPMailer-master/PHPMailer-master/class.smtp.php';
 
+
+
 $nivelAcesso = $_POST['nivelAcesso'];
 $nome = $_POST['nomePessoa'];
 $nivel = $_POST['nivel'];
@@ -17,11 +19,6 @@ $email = $_POST['email'];
 $nomeUsuario = $_POST['login'];
 $pwd = $_POST['senha'];
 $hash = md5(rand(0, 1000));
-
-
-
-
-
 
 
 $p = PessoaDao::newPessoa();
