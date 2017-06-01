@@ -16,7 +16,7 @@ $dtNasc = $_POST['dtNasc'];
 $email = $_POST['email'];
 $nomeUsuario = $_POST['login'];
 $pwd = $_POST['senha'];
-$hash = md5(rand(0,1000));
+$hash = md5(rand(0, 1000));
 
 
 
@@ -37,51 +37,53 @@ $p->setId(DB::lastId($p->getTabela(), 'pesId'));
 
 echo 'Nova pessoa tem o id: ' . $p->getId();
 
-$pessoa = $p->getId();       
+$pessoa = $p->getId();
 $u = new UsuarioDao($pwd, 0, $nivel, $nomeUsuario, $pessoa);
 
 $u->setHash($hash);
 
-if($u->cadastrarUsuario()){
+if ($u->cadastrarUsuario()) {
     echo 'usuarioCadastrado';
-    
-    $mail = new PHPMailer(); 
-    
+
+    $mail = new PHPMailer();
+
     $mail->IsSMTP();
+    $mail->CharSet = "UTF-8";
     //configuração do gmail
     $mail->Port = 465; //porta usada pelo gmail.
-    $mail->Host = 'smtp.gmail.com'; 
-    $mail->IsHTML(true); 
-    $mail->Mailer = 'smtp'; 
+    $mail->Host = 'smtp.gmail.com';
+    $mail->IsHTML(true);
+    $mail->Mailer = 'smtp';
     $mail->SMTPSecure = 'ssl';
 
     //configuração do usuário do gmail
-    $mail->SMTPAuth = true; 
+    $mail->SMTPAuth = true;
     $mail->Username = 'luca@alunos.utfpr.edu.br'; // usuario gmail.   
     $mail->Password = '2007prediger'; // senha do email.
 
-    $mail->SingleTo = true; 
+    $mail->SingleTo = true;
 
     // configuração do email a ver enviado.
-    $mail->From = "luca@alunos.utfpr.edu.br"; 
-    $mail->FromName = "Sistemas de Eventos"; 
+    $mail->From = "luca@alunos.utfpr.edu.br";
+    $mail->FromName = "Sistemas de Eventos";
 
     $mail->addAddress($email); // email do destinatario.
 
-    $mail->Subject = "Ativação de E-mail."; 
-    $mail->Body = "Seque o link com ativação: .";
-    
-    for($i=0; $i<20; $i++){
-        if($mail->Send()){
+    $mail->Subject = "Ativação de E-mail.";
+
+    $mail->Body = 'Para confirmar seu cadastro acesse o seguinte link: ' .
+            'http://localhost/aps1/validarEmail.php?email=' . $email . '&hash=' . $hash;
+    $mail->AltBody = "Este é o corpo da mensagem de teste, em Texto Plano! \r\n :)";
+
+
+    if ($mail->Send()) {
         echo '<br>email enviado com sucesso!!!!';
         echo '<br>' . $email;
-         }else{
+    } else {
         echo "<br>Erro ao enviar Email:" . $mail->ErrorInfo;
     }
     echo $i;
-    }
-    
-}else{
+} else {
     echo 'ERRO AO CADASTRAR USUARIO';
 }
 
