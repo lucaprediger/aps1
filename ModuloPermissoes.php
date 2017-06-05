@@ -25,6 +25,9 @@ class ModuloPermissoes {
     public static function EMISSAO_CERTIFICADOS(){
         return new ModuloPermissoes("Emissão de certificados",true,true);
     }
+    public static function VISUALIZAR_CERTIFICADOS(){
+        return new ModuloPermissoes("Emissão de certificados",true,FALSE);
+    }
     
 
     function getDescricao() {
