@@ -11,12 +11,12 @@
  *
  * @author marcio
  */
-interface enumPermissoes {
-    const CadastrarUsuario = 0;
-    const CadastrarPessoa = 1;
-    const CadastrarEvento = 2;
-    const CadastrarAtividade = 3;
-    const CadastrarRecurso = 4;
-    const CadastrarPalestrante = 5;
-    //put your code here
+abstract class Enumeration {
+
+    public static function enum() {
+        $reflect = new ReflectionClass(get_called_class());
+        return $reflect->getConstants();
+    }
+
 }
+

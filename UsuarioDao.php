@@ -90,7 +90,7 @@ class UsuarioDao extends Usuario {
         return ($stm->rowCount() > 0);
     }
 
-    public function getByIdPessoa($idPessoa) {
+    public static function getByIdPessoa($idPessoa) {
         $dbh = DB::getInstance();
 
         $sql = "SELECT * FROM usuarios WHERE usuPesId = :pesId";

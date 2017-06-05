@@ -1,33 +1,61 @@
 <?php
 
-class Permissao{
-    private $pusId = 0;
-    private $pusPagina = "";
-    private $pusUsuId = 0;
+require_once './DB.php';
+
+class Permissao {
     
-    function getPusId() {
-        return $this->pusId;
+    protected $tabela = "permissoes";
+    protected $id = 0;
+    protected $descricao = "";
+    protected $usuId = "";
+    protected $leitura;
+    protected $gravacao;
+
+    
+    function getPerId() {
+        return $this->perId;
     }
 
-    function getPusPagina() {
-        return $this->pusPagina;
+    function getDescricao() {
+        return $this->descricao;
     }
 
-    function getPusUsuId() {
-        return $this->pusUsuId;
+    function getUsuPerId() {
+        return $this->usuPerId;
     }
 
-    function setPusId($pusId) {
-        $this->pusId = $pusId;
+    function getLeitura() {
+        return $this->leitura;
     }
 
-    function setPusPagina($pusPagina) {
-        $this->pusPagina = $pusPagina;
+    function getGravacao() {
+        return $this->gravacao;
     }
 
-    function setPusUsuId($pusUsuId) {
-        $this->pusUsuId = $pusUsuId;
+    function setPerId($perId) {
+        $this->perId = $perId;
     }
+
+    function setDescricao($descricao) {
+        $this->descricao = $descricao;
+    }
+
+    function setUsuPerId($usuPerId) {
+        $this->usuPerId = $usuPerId;
+    }
+
+    function setLeitura($leitura) {
+        $this->leitura = $leitura;
+    }
+
+    function setGravacao($gravacao) {
+        $this->gravacao = $gravacao;
+    }
+
+    function __construct() {
+        
+    }
+
 
     
 }

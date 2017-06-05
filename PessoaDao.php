@@ -52,8 +52,6 @@ class PessoaDao extends Pessoa {
             $pes->setIdentificacao($pesFinded->identificacao);
             $pes->setNome($pesFinded->pesNome);
             $pes->setRg($pesFinded->pesRG);
-        }else{
-            $pes = NULL;
         }
         return $pes;
             
