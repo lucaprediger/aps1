@@ -42,17 +42,14 @@ class GerenciarPermissoes {
                 $per->inserir();
             }
         }
-        echo '<h1>Cadastro de permissões</h1><br>
-                <form action="login.php" method="post" >
-                    Login:  <input type="text" name="nomeUsuario" size="20" maxlength="100"/>
-                    <br><br>
-                    Senha:  <input type="password" name="senha" size="20" maxlength="16" />
-                    <br><br>
-                    <input type="checkbox" value="lembrarme" id="lembrarme" style="align-content: flex-start">Lembrar-me
-                    <br>
-                    <input type="submit" name="login" class="login loginmodal-submit" value="Login">
-                    
-                </form>';
+        
+        exibirDados();
+        
+    }
+    
+    function exibirDados(){
+        include definirPermissoes;
+        
     }
 
     
