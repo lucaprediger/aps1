@@ -9,38 +9,45 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <script type="text/javascript" src="scripts/scripts.js"></script>
     </head>
     <body>
+
+        <h1>Cadastro de permissões</h1><br>
+
         <div>
+            <!--USUARIO-->
+            Usuario: 
+            <select name="usuario" onchange="carregarPermissoes()">
 
-            <h1>Cadastro de permissões</h1><br>
-            <table>
-                <tr>
-                    <th>Nome</th>
-                    <th>Usuario</th>
-                    <th>Módulo</th>
-                    <th>Leitura</th>
-                    <th>Gravação</th>
-                </tr>
                 <?php
-                require_once './PermissaoUsuarioDao.php';
-                require_once './PermissaoDao.php';
-                $per = PermissaoDao::getAll();
-                $per->execute();
-                while ($r = $per->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
-                ?>
-                <tr id="linha<?php echo $r[0] ?>" > 
-                    <th scope="row"><?php echo $r[0]; ?></th> 
-                    <td><?php echo $r[1] ?></td>
-                    <td><?php echo $r[2] ?></td>
-                    <td><?php echo $r[3] ?></td>
-                    <td><?php echo $r[4] ?></td>
-
-                    <td><input type="button" onClick="apagarCliente(<?php echo $r[0] ?>)" > </td>
-                    <td><input type="button" onClick="editarCliente(<?php echo $r[0] ?>)" > </td>
-                </tr> 
+                require_once './Usuario.php';
+                require_once './UsuarioDao.php';
+                $usu = UsuarioDao::getAll();
+                $usu->execute();
+                while ($r = $usu->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
+                    echo '<pre>';
+                    ?>
+                    <option value=<?php echo $r['usuId']; ?>><?php echo $r['usuUsername']; ?></option>
                 <?php } ?>
+            </select>
+            <div class="row">
+            <table class="table "> 
+                <thead> 
+                    <tr> 
+                        <th>#</th> 
+                        <th>Permissão</th> 
+                        <th>Leitura</th> 
+                        <th>Gravaçao</th> 
+                    </tr> 
+                </thead> 
+                <tbody id="result"> 
+
+                </tbody> 
             </table>
         </div>
+        </div>
+        <input type="button" value="OK" id="btOk">
+        <input type="button" value="CANCELAR" id="btCancelar">
     </body>
 </html>

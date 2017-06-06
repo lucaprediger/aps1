@@ -35,17 +35,13 @@ class UsuarioDao extends Usuario {
         return ($stm->rowCount() > 0);
     }
 
-    public function listAll() {
-        $sql = "SELECT * FROM $this->tabela";
-        $stm = DB::prepare($sql);
-        $stm->bindParam(':nomeUsuario', $this->nomeUsuario);
-        $stm->bindParam(':senha', $this->pwd);
-        $stm->execute();
-        echo 'Quantidade: ' . $stm->rowCount();
-        var_dump($stm);
-        echo('</pre>');
+    public static function getAll() {
+        $dbh = DB::getInstance();
 
-        return ($stm->rowCount() > 0);
+        $sql = "SELECT * FROM usuarios";
+        $stmt = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+        return $stmt;
+
     }
 
     public function cadastrarUsuario() {
