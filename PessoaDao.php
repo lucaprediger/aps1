@@ -115,5 +115,16 @@ class PessoaDao extends Pessoa {
 
         return true;
     }
+    
+     public static function listAll() {
+        $sql = "SELECT * FROM $this->tabela";
+        $stm = DB::prepare($sql);
+        $stm->execute();
+        echo 'Quantidade: ' . $stm->rowCount();
+        var_dump($stm);
+        echo('</pre>');
+
+        return ($stm->rowCount() > 0);
+    }
 
 }

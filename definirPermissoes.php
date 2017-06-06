@@ -16,8 +16,7 @@ and open the template in the editor.
             <h1>Cadastro de permissões</h1><br>
             <table>
                 <tr>
-                    <th>Nome</th>
-                    <th>Usuario</th>
+                    <th>ID</th>
                     <th>Módulo</th>
                     <th>Leitura</th>
                     <th>Gravação</th>
@@ -26,18 +25,17 @@ and open the template in the editor.
                 require_once './PermissaoUsuarioDao.php';
                 require_once './PermissaoDao.php';
                 $pu = new PermissaoUsuarioDao;
-                $pu->
-                while ($r = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+                $stmtPU = PermissaoDao::getAll();
+                $stmtPU->execute();
+                $per = new PermissaoUsuario();
+                while ($per = $stmtPU->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+                    //$stmtPER = PermissaoDao::getByPuIdAndUsuId($pu->getId(),1);    
                 ?>
-                <tr id="linha<?php echo $r[0] ?>" > 
-                    <th scope="row"><?php echo $r[0]; ?></th> 
-                    <td><?php echo $r[1] ?></td>
-                    <td><?php echo $r[2] ?></td>
-                    <td><?php echo $r[3] ?></td>
-                    <td><?php echo $r[4] ?></td>
-
-                    <td><input type="button" onClick="apagarCliente(<?php echo $r[0] ?>)" > </td>
-                    <td><input type="button" onClick="editarCliente(<?php echo $r[0] ?>)" > </td>
+                <tr id="linha<?php echo $per[1] ?>" > 
+                    <th scope="row"><?php echo $per[0]; ?></th> 
+                    <td><?php echo $per[1] ?></td>
+                    <td><input type="checkbox" > </td>
+                    <td><input type="checkbox" > </td>
                 </tr> 
                 <?php } ?>
             </table>

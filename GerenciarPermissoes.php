@@ -43,14 +43,11 @@ class GerenciarPermissoes {
             }
         }
         
-        exibirDados();
+        include './definirPermissoes.php';
+
         
     }
     
-    function exibirDados(){
-        include definirPermissoes;
-        
-    }
-
+    
     
 }

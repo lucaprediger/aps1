@@ -1,241 +1,224 @@
--- MySQL Workbench Forward Engineering
+CREATE DATABASE  IF NOT EXISTS `eventus` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `eventus`;
+-- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
+--
+-- Host: localhost    Database: eventus
+-- ------------------------------------------------------
+-- Server version	5.6.26-log
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
--- Schema eventus
--- -----------------------------------------------------
+--
+-- Table structure for table `atividades`
+--
 
--- -----------------------------------------------------
--- Schema eventus
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `eventus` DEFAULT CHARACTER SET utf8 ;
-USE `eventus` ;
-
--- -----------------------------------------------------
--- Table `eventus`.`eventos`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eventus`.`eventos` (
-  `EveID` INT(11) NOT NULL AUTO_INCREMENT,
-  `EveNome` VARCHAR(45) NOT NULL,
-  `EveDataIni` DATE NOT NULL,
-  `EveDataFim` DATE NOT NULL,
-  `eveLocal` VARCHAR(45) NOT NULL,
-  `eveCampus` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(200) NOT NULL,
-  `eventoscol` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`EveID`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `eventus`.`atividades`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eventus`.`atividades` (
-  `atiId` INT(11) NOT NULL,
-  `atiInicio` DATETIME NOT NULL,
-  `atiFim` DATETIME NOT NULL,
-  `atiTema` VARCHAR(150) NOT NULL,
-  `atiNome` VARCHAR(45) NOT NULL,
-  `atiEveEveId` INT(11) NOT NULL,
+DROP TABLE IF EXISTS `atividades`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `atividades` (
+  `atiId` int(11) NOT NULL,
+  `atiInicio` datetime NOT NULL,
+  `atiFim` datetime NOT NULL,
+  `atiTema` varchar(150) NOT NULL,
+  `atiNome` varchar(45) NOT NULL,
+  `atiEveEveId` int(11) NOT NULL,
   PRIMARY KEY (`atiId`),
-  INDEX `fk_atividades_eventos1_idx` (`atiEveEveId` ASC),
-  CONSTRAINT `fk_atividades_eventos1`
-    FOREIGN KEY (`atiEveEveId`)
-    REFERENCES `eventus`.`eventos` (`EveID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
+  KEY `fk_atividades_eventos1_idx` (`atiEveEveId`),
+  CONSTRAINT `fk_atividades_eventos1` FOREIGN KEY (`atiEveEveId`) REFERENCES `eventos` (`EveID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `atividades_has_usuarios`
+--
 
--- -----------------------------------------------------
--- Table `eventus`.`pessoas`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eventus`.`pessoas` (
-  `pesId` BIGINT(11) NOT NULL AUTO_INCREMENT,
-  `pesNome` VARCHAR(100) NOT NULL,
-  `pesIdentificacao` VARCHAR(30) NULL DEFAULT NULL,
-  `pesCPF` VARCHAR(11) NOT NULL,
-  `pesDtNasc` DATE NOT NULL,
-  `pesEmail` VARCHAR(200) NOT NULL,
-  `pesRG` VARCHAR(15) NULL DEFAULT NULL,
-  PRIMARY KEY (`pesId`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 127
-DEFAULT CHARACTER SET = latin1;
+DROP TABLE IF EXISTS `atividades_has_usuarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `atividades_has_usuarios` (
+  `atividades_id` int(11) NOT NULL,
+  `usuarios_usuId` bigint(11) NOT NULL,
+  PRIMARY KEY (`atividades_id`,`usuarios_usuId`),
+  KEY `fk_atividades_has_usuarios_usuarios1_idx` (`usuarios_usuId`),
+  KEY `fk_atividades_has_usuarios_atividades1_idx` (`atividades_id`),
+  CONSTRAINT `fk_atividades_has_usuarios_atividades1` FOREIGN KEY (`atividades_id`) REFERENCES `atividades` (`atiId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_atividades_has_usuarios_usuarios1` FOREIGN KEY (`usuarios_usuId`) REFERENCES `usuarios` (`usuId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `eventos`
+--
 
--- -----------------------------------------------------
--- Table `eventus`.`usuarios`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eventus`.`usuarios` (
-  `usuId` BIGINT(11) NOT NULL AUTO_INCREMENT,
-  `usuUsername` VARCHAR(15) NOT NULL,
-  `usuSenha` VARCHAR(15) NOT NULL,
-  `usuNivel` INT(11) NOT NULL,
-  `usuPesId` BIGINT(11) NOT NULL,
-  `usuHash` VARCHAR(32) NOT NULL,
-  `usuAtivo` INT(1) NOT NULL DEFAULT '0',
-  `usuTipo` INT(1) NOT NULL,
-  PRIMARY KEY (`usuId`),
-  INDEX `fk_usuarios_pessoas1_idx` (`usuPesId` ASC),
-  CONSTRAINT `fk_usuarios_pessoas1`
-    FOREIGN KEY (`usuPesId`)
-    REFERENCES `eventus`.`pessoas` (`pesId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 85
-DEFAULT CHARACTER SET = latin1;
+DROP TABLE IF EXISTS `eventos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `eventos` (
+  `EveID` int(11) NOT NULL AUTO_INCREMENT,
+  `EveNome` varchar(45) NOT NULL,
+  `EveDataIni` date NOT NULL,
+  `EveDataFim` date NOT NULL,
+  `eveLocal` varchar(45) NOT NULL,
+  `eveCampus` varchar(45) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `eventoscol` varchar(45) NOT NULL,
+  PRIMARY KEY (`EveID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `minicursos`
+--
 
--- -----------------------------------------------------
--- Table `eventus`.`atividades_has_usuarios`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eventus`.`atividades_has_usuarios` (
-  `atividades_id` INT(11) NOT NULL,
-  `usuarios_usuId` BIGINT(11) NOT NULL,
-  PRIMARY KEY (`atividades_id`, `usuarios_usuId`),
-  INDEX `fk_atividades_has_usuarios_usuarios1_idx` (`usuarios_usuId` ASC),
-  INDEX `fk_atividades_has_usuarios_atividades1_idx` (`atividades_id` ASC),
-  CONSTRAINT `fk_atividades_has_usuarios_atividades1`
-    FOREIGN KEY (`atividades_id`)
-    REFERENCES `eventus`.`atividades` (`atiId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_atividades_has_usuarios_usuarios1`
-    FOREIGN KEY (`usuarios_usuId`)
-    REFERENCES `eventus`.`usuarios` (`usuId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
+DROP TABLE IF EXISTS `minicursos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `minicursos` (
+  `atividades_id` int(11) NOT NULL,
+  KEY `fk_minicursos_atividades1_idx` (`atividades_id`),
+  CONSTRAINT `fk_minicursos_atividades1` FOREIGN KEY (`atividades_id`) REFERENCES `atividades` (`atiId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `ministrantes`
+--
 
--- -----------------------------------------------------
--- Table `eventus`.`minicursos`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eventus`.`minicursos` (
-  `atividades_id` INT(11) NOT NULL,
-  INDEX `fk_minicursos_atividades1_idx` (`atividades_id` ASC),
-  CONSTRAINT `fk_minicursos_atividades1`
-    FOREIGN KEY (`atividades_id`)
-    REFERENCES `eventus`.`atividades` (`atiId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DROP TABLE IF EXISTS `ministrantes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ministrantes` (
+  `MinID` int(11) NOT NULL AUTO_INCREMENT,
+  `MinNome` varchar(75) NOT NULL,
+  `MinInstituicao` varchar(75) NOT NULL,
+  `MinCelular` varchar(11) DEFAULT NULL,
+  `MinEmail` varchar(100) NOT NULL,
+  `MinCusto` decimal(12,2) DEFAULT NULL,
+  PRIMARY KEY (`MinID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `palestras`
+--
 
--- -----------------------------------------------------
--- Table `eventus`.`ministrantes`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eventus`.`ministrantes` (
-  `MinID` INT(11) NOT NULL AUTO_INCREMENT,
-  `MinNome` VARCHAR(75) NOT NULL,
-  `MinInstituicao` VARCHAR(75) NOT NULL,
-  `MinCelular` VARCHAR(11) NULL DEFAULT NULL,
-  `MinEmail` VARCHAR(100) NOT NULL,
-  `MinCusto` DECIMAL(12,2) NULL DEFAULT NULL,
-  PRIMARY KEY (`MinID`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `eventus`.`palestras`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eventus`.`palestras` (
-  `palPalId` INT(11) NOT NULL,
-  `atividades_id` INT(11) NOT NULL,
+DROP TABLE IF EXISTS `palestras`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `palestras` (
+  `palPalId` int(11) NOT NULL,
+  `atividades_id` int(11) NOT NULL,
   PRIMARY KEY (`palPalId`),
-  INDEX `fk_palestras_atividades1_idx` (`atividades_id` ASC),
-  CONSTRAINT `fk_palestras_atividades1`
-    FOREIGN KEY (`atividades_id`)
-    REFERENCES `eventus`.`atividades` (`atiId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+  KEY `fk_palestras_atividades1_idx` (`atividades_id`),
+  CONSTRAINT `fk_palestras_atividades1` FOREIGN KEY (`atividades_id`) REFERENCES `atividades` (`atiId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `permissoes`
+--
 
--- -----------------------------------------------------
--- Table `eventus`.`permissoes`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eventus`.`permissoes` (
-  `perId` BIGINT(11) NOT NULL AUTO_INCREMENT,
-  `perDescricao` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`perId`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 8
-DEFAULT CHARACTER SET = utf8;
+DROP TABLE IF EXISTS `permissoes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `permissoes` (
+  `perId` bigint(11) NOT NULL AUTO_INCREMENT,
+  `perDescricao` varchar(100) NOT NULL,
+  PRIMARY KEY (`perId`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `pessoas`
+--
 
--- -----------------------------------------------------
--- Table `eventus`.`permissoesUsuarios`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eventus`.`permissoesUsuarios` (
-  `pusID` INT(11) NOT NULL AUTO_INCREMENT,
-  `pusUsuId` BIGINT(11) NOT NULL,
-  `pusPerId` BIGINT(11) NOT NULL,
-  `pusLeitura` SMALLINT(1) NOT NULL DEFAULT '0',
-  `pusGravacao` SMALLINT(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`pusID`),
-  INDEX `fk_permissoesUsuarios_2_idx` (`pusUsuId` ASC),
-  INDEX `fk_permissoesUsuarios_1_idx` (`pusPerId` ASC),
-  CONSTRAINT `fk_permissoesUsuarios_1`
-    FOREIGN KEY (`pusPerId`)
-    REFERENCES `eventus`.`permissoes` (`perId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_permissoesUsuarios_2`
-    FOREIGN KEY (`pusUsuId`)
-    REFERENCES `eventus`.`usuarios` (`usuId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+DROP TABLE IF EXISTS `pessoas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pessoas` (
+  `pesId` bigint(11) NOT NULL AUTO_INCREMENT,
+  `pesNome` varchar(100) NOT NULL,
+  `pesIdentificacao` varchar(30) DEFAULT NULL,
+  `pesCPF` varchar(11) NOT NULL,
+  `pesDtNasc` date NOT NULL,
+  `pesEmail` varchar(200) NOT NULL,
+  `pesRG` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`pesId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `recursos`
+--
 
--- -----------------------------------------------------
--- Table `eventus`.`recursos`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eventus`.`recursos` (
-  `RecId` INT(11) NOT NULL AUTO_INCREMENT,
-  `RecDescricao` VARCHAR(75) NOT NULL,
-  `RecCusto` DECIMAL(5,2) NULL DEFAULT '0.00',
-  PRIMARY KEY (`RecId`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COMMENT = '	';
+DROP TABLE IF EXISTS `recursos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `recursos` (
+  `RecId` int(11) NOT NULL AUTO_INCREMENT,
+  `RecDescricao` varchar(75) NOT NULL,
+  `RecCusto` decimal(5,2) DEFAULT '0.00',
+  PRIMARY KEY (`RecId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='	';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `tipousuario`
+--
 
--- -----------------------------------------------------
--- Table `eventus`.`tipousuario`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eventus`.`tipousuario` (
-  `tusId` BIGINT(11) NOT NULL,
-  `tusDescrição` VARCHAR(45) NULL DEFAULT NULL,
-  `tusUsuId` BIGINT(11) NOT NULL,
-  `TipoUsuariocol` VARCHAR(45) NULL DEFAULT NULL,
+DROP TABLE IF EXISTS `tipousuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipousuario` (
+  `tusId` bigint(11) NOT NULL,
+  `tusDescrição` varchar(45) DEFAULT NULL,
+  `tusUsuId` bigint(11) NOT NULL,
+  `TipoUsuariocol` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`tusId`),
-  INDEX `fk_TipoUsuario_usuarios1_idx` (`tusUsuId` ASC),
-  CONSTRAINT `fk_TipoUsuario_usuarios1`
-    FOREIGN KEY (`tusUsuId`)
-    REFERENCES `eventus`.`usuarios` (`usuId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+  KEY `fk_TipoUsuario_usuarios1_idx` (`tusUsuId`),
+  CONSTRAINT `fk_TipoUsuario_usuarios1` FOREIGN KEY (`tusUsuId`) REFERENCES `usuarios` (`usuId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `usuarios`
+--
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+DROP TABLE IF EXISTS `usuarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuarios` (
+  `usuId` bigint(11) NOT NULL AUTO_INCREMENT,
+  `usuUsername` varchar(15) NOT NULL,
+  `usuSenha` varchar(15) NOT NULL,
+  `usuNivel` int(11) NOT NULL,
+  `usuPesId` bigint(11) NOT NULL,
+  `usuHash` varchar(32) NOT NULL,
+  `usuAtivo` int(1) NOT NULL DEFAULT '0',
+  `usuTipo` int(1) NOT NULL,
+  PRIMARY KEY (`usuId`),
+  KEY `fk_usuarios_pessoas1_idx` (`usuPesId`),
+  CONSTRAINT `fk_usuarios_pessoas1` FOREIGN KEY (`usuPesId`) REFERENCES `pessoas` (`pesId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-06-06 10:32:50
+    
