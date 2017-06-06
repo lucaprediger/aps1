@@ -60,12 +60,12 @@ class PermissaoDao extends Permissao {
         var_dump($per);
     }
 
-    function getAll() {
+    static function getAll() {
         $dbh = DB::getInstance();
 
         $sql = "SELECT * FROM permissoes";
-        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Permissao');
-        return $stmt->execute();
+        $stmt = $dbh->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+        return $stmt;
     }
 
 }

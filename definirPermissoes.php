@@ -25,9 +25,9 @@ and open the template in the editor.
                 <?php
                 require_once './PermissaoUsuarioDao.php';
                 require_once './PermissaoDao.php';
-                $pu = new PermissaoUsuarioDao;
-                $pu->
-                while ($r = $stmt->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+                $per = PermissaoDao::getAll();
+                $per->execute();
+                while ($r = $per->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
                 ?>
                 <tr id="linha<?php echo $r[0] ?>" > 
                     <th scope="row"><?php echo $r[0]; ?></th> 
