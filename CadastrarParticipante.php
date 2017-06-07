@@ -7,7 +7,7 @@ require_once './PHPMailer-master/PHPMailer-master/class.phpmailer.php';
 require_once './PHPMailer-master/PHPMailer-master/class.smtp.php';
 
 
-
+ 
 $nivelAcesso = $_POST['nivelAcesso'];
 $nome = $_POST['nomePessoa'];
 $nivel = $_POST['nivel'];
