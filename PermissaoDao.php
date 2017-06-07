@@ -17,7 +17,7 @@ class PermissaoDao extends Permissao {
         $sql = "INSERT INTO permissoes (perDescricao) "
                 . "values(:perDescricao)";
         $stm = $dbh->prepare($sql);
-        $stm->bindParam(':perDescricao', $this->getDescricao());
+        $stm->bindValue(':perDescricao', $this->getDescricao());
 
         try {
             $result = $stm->execute();

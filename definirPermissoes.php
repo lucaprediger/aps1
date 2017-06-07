@@ -9,7 +9,7 @@ and open the template in the editor.
         <title>Definir permissoes</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-         <script type="text/javascript" src="scripts/scripts.js"></script>
+        <script type="text/javascript" src="scripts/scripts.js"></script>
     </head>
     <body>
 
@@ -18,7 +18,7 @@ and open the template in the editor.
         <div>
             <!--USUARIO-->
             Usuario: 
-            <select name="usuario" id="usuario">
+            <select name="usuario" id="usuario" onchange="carregarPermissoes()">
 
                 <?php
                 require_once './Usuario.php';
@@ -33,22 +33,26 @@ and open the template in the editor.
             </select>
             <input type="button" value="verificar" onclick="carregarPermissoes()">
             <div>
-            <table class="table "> 
-                <thead> 
-                    <tr> 
-                        <th>#</th> 
-                        <th>Permissão</th> 
-                        <th>Leitura</th> 
-                        <th>Gravaçao</th> 
-                    </tr> 
-                </thead> 
-                <tbody id="result"> 
+                <table class="table "> 
+                    <thead> 
+                        <tr> 
+                            <th>#</th> 
+                            <th>Permissão</th> 
+                            <th>Leitura</th> 
+                            <th>Gravaçao</th> 
+                        </tr> 
+                    </thead> 
+                    <tbody id="result"> 
 
-                </tbody> 
-            </table>
-        </div>
+                    </tbody> 
+                </table>
+            </div>
         </div>
         <input type="button" value="OK" id="btOk" onclick="atualizarPermissoes()">
         <input type="button" value="CANCELAR" id="btCancelar">
+        <script type="text/javascript">
+            carregarPermissoes();
+        </script>
+
     </body>
 </html>

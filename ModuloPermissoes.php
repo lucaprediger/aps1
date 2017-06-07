@@ -26,7 +26,10 @@ class ModuloPermissoes {
         return new ModuloPermissoes("Emissão de certificados",true,true);
     }
     public static function VISUALIZAR_CERTIFICADOS(){
-        return new ModuloPermissoes("Emissão de certificados",true,FALSE);
+        return new ModuloPermissoes("Visualizar certificados",true,FALSE);
+    }
+     public static function EMITIR_NOTA_FISCAL(){
+        return new ModuloPermissoes("Emitir nota fiscal",true,FALSE);
     }
     
 
