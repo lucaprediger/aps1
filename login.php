@@ -1,14 +1,22 @@
 <?php
 
-require_once './UsuarioDao.php';
-
-$nomeUsuario = $_POST['nomeUsuario'];
-$pwd = $_POST['senha'];
-$u =  UsuarioDao::paraLogar($nomeUsuario, $pwd);
-
-if ($u->existeUsuario()) {
-    echo 'usuarioLogado';
-} else {
-    echo 'Usuario inválido';
-}
-
+class login{
+    protected function lembrar($senha)
+    {
+        $cookie=array(
+            'usuario'=>$this->salt().base64_encode($_POST['usuario']),
+            'senha'=>$this->salt().base64_encode($senha)
+        );
+        setcookie('blog_ghj', $cookie['usuario'], (time() + (15 * 24 * 3600)),$_SERVER['SERVER_NAME']);
+        setcookie('blog_ghk', $cookie['senha'], (time() + (15 * 24 * 3600)),$_SERVER['SERVER_NAME']);
+    }
+    public function logout()
+    {
+        session_start();
+        session_unset();
+        session_destroy();
+        header('Location: index.html');
+    } 
+    
+    
+} 
