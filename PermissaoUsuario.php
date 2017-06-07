@@ -36,11 +36,11 @@ class PermissaoUsuario {
     }
     
     function getPerLeitura() {
-        return $this->perLeitura;
+        return ($this->perLeitura=="true"?1:0);
     }
 
     function getPerGravacao() {
-        return $this->perGravacao;
+        return ($this->perGravacao=="1"?1:0);
     }
 
     function setPerLeitura($perLeitura) {

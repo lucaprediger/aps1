@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Definir permissoes</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
          <script type="text/javascript" src="scripts/scripts.js"></script>
@@ -18,7 +18,7 @@ and open the template in the editor.
         <div>
             <!--USUARIO-->
             Usuario: 
-            <select name="usuario" onchange="carregarPermissoes()">
+            <select name="usuario" id="usuario">
 
                 <?php
                 require_once './Usuario.php';
@@ -31,7 +31,8 @@ and open the template in the editor.
                     <option value=<?php echo $r['usuId']; ?>><?php echo $r['usuUsername']; ?></option>
                 <?php } ?>
             </select>
-            <div class="row">
+            <input type="button" value="verificar" onclick="carregarPermissoes()">
+            <div>
             <table class="table "> 
                 <thead> 
                     <tr> 
@@ -47,7 +48,7 @@ and open the template in the editor.
             </table>
         </div>
         </div>
-        <input type="button" value="OK" id="btOk">
+        <input type="button" value="OK" id="btOk" onclick="atualizarPermissoes()">
         <input type="button" value="CANCELAR" id="btCancelar">
     </body>
 </html>
