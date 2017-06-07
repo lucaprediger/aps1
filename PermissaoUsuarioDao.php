@@ -35,17 +35,20 @@ class PermissaoUsuarioDao extends PermissaoUsuario {
     function atualizar() {
         $dbh = DB::getInstance();
 
-
-        $sql = "UPDATE permissoesUsuarios set pusUsuId = :usuId, "
-                . "pusPerId = :perId, "
+        
+        $sql = "UPDATE permissoesUsuarios set "  
                 . "pusLeitura = :leitura, "
-                . "pusGravacao = :gravacao) ";
+                . "pusGravacao = :gravacao "
+                . "WHERE  pusId = :idPermissao";
+        
+        
+        
+        
         $stm = $dbh->prepare($sql);
-        $stm->bindValue(':usuId', $this->getPerId());
-        $stm->bindValue(':perId', $this->getPerUsuId());
+        $stm->bindValue(':idPermissao', $this->getId());
         $stm->bindValue(':leitura', $this->getPerLeitura());
         $stm->bindValue(':gravacao', $this->getPerGravacao());
-
+        
         try {
             $result = $stm->execute();
         } catch (Exception $ex) {
@@ -82,7 +85,7 @@ class PermissaoUsuarioDao extends PermissaoUsuario {
     }
 
     public function atualizarPermissao() {
-        var_dump($this);
+        
         if ($this->getId() == null) {
             $this->inserir();
         } else {
