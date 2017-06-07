@@ -29,8 +29,6 @@ class UsuarioDao extends Usuario {
         $stm->bindParam(':senha', $this->pwd);
         $stm->execute();
 
-        echo '<br>NomeUsuario: ' . $this->nomeUsuario . '<br>';
-        echo 'SENHA: ' . $this->pwd . '<br>';
 
         return ($stm->rowCount() > 0);
     }

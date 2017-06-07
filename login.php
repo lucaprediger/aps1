@@ -7,7 +7,7 @@ $pwd = $_POST['senha'];
 $u =  UsuarioDao::paraLogar($nomeUsuario, $pwd);
 
 if ($u->existeUsuario()) {
-    echo 'usuarioLogado';
+    header("location:GerenciarPermissoes.php");
 } else {
     echo 'Usuario inválido';
 }
