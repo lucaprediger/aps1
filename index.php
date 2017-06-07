@@ -43,7 +43,7 @@
                 </form>
                 
                 <div class="login-help">
-                    <a href="CadastrarParticipanteForm.php">Registrar-se</a> - <a href="#">Forgot Password</a>
+                    <a href="CadastrarParticipanteForm.php">Registrar-se</a> - <a href="recuperarSenha.php">Esqueci a Senha</a>
                 </div>
             </div>
         </div>
