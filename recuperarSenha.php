@@ -12,14 +12,17 @@
             <div >
                 <h1>Recuperação de conta</h1><br>
                 <h2></h2>
-                <form  action='enviarRecuperacao.php' method="post" >
-                    E-mail:  <input type="text" name="email" size="20" maxlength="100" />
+                <form  >
+                    <div id="msgEmail"></div>
+                    E-mail:  <input type="text" id="inEmail" name="email" size="20" maxlength="100" />
                     <br><br>
-                    <input type="submit" name="recuperacao"  value="Enviar">
+                    <input type="button" onclick="recuperaSenha()" name="recuperacao"  value="Enviar">
+                    
                     
                 </form>
                 
             </div>
         </div>
     </body>
+     <script type="text/javascript" src="scripts/scripts.js"></script>
 </html>

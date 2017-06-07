@@ -10,11 +10,12 @@ $mail = $_POST['email'];
 
 $pessoa = PessoaDao::newPessoa()->getByMail($mail);
 
-$novoEmail = $pessoa->getEmail();
+
 
 //var_dump($pessoa);
 if ($pessoa->getId()!= 0) {
     
+    $novoEmail = $pessoa->getEmail();
     //$usu = UsuarioDao::newUsuarioDao();
     
     $usu = UsuarioDao::newUsuarioDao()->getByIdPessoa($pessoa->getId());
@@ -52,27 +53,26 @@ if ($pessoa->getId()!= 0) {
             
     $mail->AltBody = "Este é o corpo da mensagem de teste, em Texto Plano! \r\n :)";
 
-
+    
+    
     if ($mail->Send()) {
         echo '<br>email enviado com sucesso!!!!';
-        $redirect = "./index.php";
+        sleep(10);
+        $redirect = "index.php";
         header("location:$redirect");
     } else {
         echo "<br>Erro ao enviar Email:" . $mail->ErrorInfo;
-        $redirect = "./index.php";
+        sleep(10);
+        $redirect = "index.php";
         header("location:$redirect");
     }
     
     
     
 } else {
-    echo 'email inválido';
-    $redirect = "./index.php";
-    header("location:$redirect");
+    echo '<font color=\'red\'> Esse email não existe em nosso banco de Dados...<br> Favor, Cadastre-se</font>';
 }
  
- 
-    
 
 ?>
 

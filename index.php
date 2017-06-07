@@ -31,7 +31,7 @@
         <div class="modal-dialog">
             <div class="loginmodal-container">
                 <h1>Faça login para ter acesso</h1><br>
-                <form action="login.php" method="post" >
+                <form action="loginForm.php" method="post" >
                     Login:  <input type="text" name="nomeUsuario" size="20" maxlength="100"/>
                     <br><br>
                     Senha:  <input type="password" name="senha" size="20" maxlength="16" />
