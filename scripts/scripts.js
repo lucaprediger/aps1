@@ -30,18 +30,18 @@ function atualizarPermissoes() {
             var xmlhttp = new XMLHttpRequest();
 
             
-
+            var vetTipoValor = inputs[i].name.split(":");
             var dados = 'idUsu=' + usuario
-                    + '&tipo=' + inputs[i].value
-                    + '&permissao=' + inputs[i].name
-                    + '&valor=' + inputs[i].checked;
+                    + '&permissao=' + vetTipoValor[1]
+                    + '&tipo=' + vetTipoValor[0]
+                    + '&valor=' + (inputs[i].checked?1:0);
             alert(dados);
             
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                     var result = document.getElementById('result');
                     result.innerHTML = xmlhttp.responseText;
-//                    alert("Permissões atulizadas");
+
 
                 }
             }
